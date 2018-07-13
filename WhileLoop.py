@@ -7,12 +7,12 @@
 
 import BME280_Sensor as bme280
 import time
+import os
 
 
-while(True): 
-	bme280.DisplayData()
-	time.sleep(5)
-	clear() 
-
+while(True):
+    bme280.DisplayData()
+    print("\n")
+    
 
 
