@@ -159,12 +159,13 @@ def readBME280All(addr=DEVICE):
 
   return temperatureC1,temperatureF,pressure/100.0,humidity
 
-def DisplayData():
+def DisplayChipData():
   
   (chip_id, chip_version) = readBME280ID()
   print ("Chip ID     :", chip_id)   
   print ("Version     :", chip_version)
 
+def DisplayData():
   temperatureC,temperatureF,pressure,humidity = readBME280All()
 
   print ("Temperature : ", temperatureC, "C")
@@ -174,4 +175,5 @@ def DisplayData():
   time.sleep(2)
 
 if __name__=="__main__":
+   DisplayChipData()
    DisplayData()

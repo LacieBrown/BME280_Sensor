@@ -9,10 +9,10 @@ import BME280_Sensor as bme280
 import time
 import os
 
-
+bme280.DisplayChipData()
 while(True):
     bme280.DisplayData()
     print("\n")
-    
+    print("\n")
 
 
