@@ -10,8 +10,8 @@
 #
 # Edit   : Lacie Brown
 # Descrip: Added lines of code to write temperature in F. Display temp
-#          in F. 
-# Date   : 12/07/2018
+#          in F. Added a delay in the display function. 
+# Date   : 13/07/2018
 #
 # http://www.raspberrypi-spy.co.uk/
 #
@@ -21,6 +21,7 @@ import time
 from ctypes import c_short
 from ctypes import c_byte
 from ctypes import c_ubyte
+import os
 
 DEVICE = 0x77
 
@@ -129,7 +130,7 @@ def readBME280All(addr=DEVICE):
   t_fine = var1+var2
   temperatureC = float(((t_fine * 5) + 128) >> 8);
   temperatureC1 = temperatureC/100; 
-  temperatureF = (temperatureC1 * 1.8) + 32;
+  temperatureF = ((temperatureC1 * 1.8) + 32);
   
   # Refine pressure and adjust for temperature
   var1 = t_fine / 2.0 - 64000.0
@@ -158,8 +159,8 @@ def readBME280All(addr=DEVICE):
 
   return temperatureC1,temperatureF,pressure/100.0,humidity
 
-def main():
-
+def DisplayData():
+  
   (chip_id, chip_version) = readBME280ID()
   print ("Chip ID     :", chip_id)   
   print ("Version     :", chip_version)
@@ -170,6 +171,7 @@ def main():
   print ("Temperature : ", temperatureF, "F")
   print ("Pressure : ", pressure, "hPa")
   print ("Humidity : ", humidity, "%")
+  time.sleep(2)
 
 if __name__=="__main__":
-   main()
+   DisplayData()
