@@ -9,6 +9,8 @@ import BME280_Sensor as bme280
 import time
 import os
 
+user_input = raw_input('Press any key to start or "x" to quit') 
+
 bme280.DisplayChipData()
 while(True):
     bme280.DisplayData()
