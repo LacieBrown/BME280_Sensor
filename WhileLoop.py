@@ -37,6 +37,7 @@ user_input = raw_input("\nPress enter to begin and CTRL C to quit \n")
 try:
     while(True):
         bme280.DisplayData()
+        # save data, possible solution 
         with open("SensorData", "a+") as f:
             json.dump(bme280.DisplayData(), f)
         print("\n")
