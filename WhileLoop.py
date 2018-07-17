@@ -12,14 +12,14 @@ import time
 import os
 import sys
 import datetime
-import json
+import csv
     
 false = KeyboardInterrupt
-file_name = open("SensorData.txt", "a+") 
+f = open("SensorData.txt", "a+") 
 # Display File name data so the user can find the stored data on the local Pi
-print("The file name is ", file_name.name)
-print("The file is either closed or not ", file_name.closed)
-print("The opening mode of the file is ", file_name.mode)
+print("The file name is ", f.name)
+print("The file is either closed or not ", f.closed)
+print("The opening mode of the file is ", f.mode)
 
 # Chip Data is displayed first and only once. 
 print('Chip Data')
@@ -36,13 +36,23 @@ user_input = raw_input("\nPress enter to begin and CTRL C to quit \n")
 # Output Sensor reading to screen in a loop until CTRL C is pressed
 try:
     while(True):
-        bme280.SensorData()
+        bme280.SensorDataDict1()
+        bme280.SensorDataDict2()
         print("\n")
+
+        # Save Info to text file (Option 1)
+        f = open("SensorData.txt", "a+")
+        f.wrtie(str(dict))
+        f.close
+        # Save info to csv file (Option 2) (Excel)
+        w = csv.writer(open("SensorData.csv", "w"))
+        for key, val in dict.items():
+            w.writerow([key, val])
         
 # When CNTR C is pressed, finish by saving to a file 
 except false:
     print("\nInterrupted,  closing out")
-    f.close()
+    f.close() # final check to see if the txt file is closed 
 
 # Exit the program
 sys.exit()

@@ -173,13 +173,14 @@ def DisplayData():
   print ("Humidity : ", humidity, "%")
   time.sleep(2)
 
-def SensorDataDict():
+def SensorDataDict1():
+  temperatureC,temperatureF,pressure,humidity = readBME280All()
   dict = {}
   dict["TemperatureC"] = temperatureC
   dict["TemperatureF"] = temperatureF
   dict["Pressure"] = pressure
   dict["Humidity"] = humidity
-def SensorDataOutput():
+#def SensorDataOutput():
   # Print test version 1 
   tempC = "Temperature: %(TemperatureC)d degC" % hash
   tempF = "Temperature: %(TemperatureF)d degF" % hash
@@ -198,6 +199,11 @@ def SensorDataOutput():
 
   # Print test version 3
   print(dict)
+
+def SensorDataDict2():
+  temperatureC,temperatureF,pressure,humidity = readBME280All()
+  dict = {'TemperatureC' : temperatureC, 'TemperatureF' : temperatureF, 'Pressure' : pressure, 'humidity' : humidity}
+  print(dict) 
 
 if (__name__=="__main__"):
    SensorData()
