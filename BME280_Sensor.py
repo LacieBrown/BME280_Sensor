@@ -159,13 +159,7 @@ def readBME280All(addr=DEVICE):
 
   return temperatureC1,temperatureF,pressure/100.0,humidity
 
-<<<<<<< HEAD
-def DisplayData():
-
-=======
 def DisplayChipData():
-  
->>>>>>> 2f3d0d2e35ee9d2a4759a78f292a91af79b190b3
   (chip_id, chip_version) = readBME280ID()
   print ("Chip ID     :", chip_id)   
   print ("Version     :", chip_version)
@@ -173,12 +167,38 @@ def DisplayChipData():
 def DisplayData():
   temperatureC,temperatureF,pressure,humidity = readBME280All()
 
-  print ("Temperature : ", temperatureC, "C")
-  print ("Temperature : ", temperatureF, "F")
+  print ("TemperatureC : ", temperatureC, "C")
+  print ("TemperatureF : ", temperatureF, "F")
   print ("Pressure : ", pressure, "hPa")
   print ("Humidity : ", humidity, "%")
   time.sleep(2)
 
-if __name__=="__main__":
-   DisplayChipData()
-   DisplayData()
+def SensorDataDict():
+  dict = {}
+  dict["TemperatureC"] = temperatureC
+  dict["TemperatureF"] = temperatureF
+  dict["Pressure"] = pressure
+  dict["Humidity"] = humidity
+def SensorDataOutput():
+  # Print test version 1 
+  tempC = "Temperature: %(TemperatureC)d degC" % hash
+  tempF = "Temperature: %(TemperatureF)d degF" % hash
+  press = "Pressure   : %(Pressure)d     hPa"  % hash
+  hum   = "Humidity   : %(Humidity)d     %%%"  % hash
+  print(tempC)
+  print(tempF)
+  print(press)
+  print(hum)
+
+  # Print test version 2
+  print("Temperature: %(TemperatureC)d C")
+  print("Temperature: %(TemperatureF)d F")
+  print("Pressure: %(Pressure)d hPa")
+  print("Humidity: %(Humidity)d %%")
+
+  # Print test version 3
+  print(dict)
+
+if (__name__=="__main__"):
+   SensorData()
+   SensorDataOutput()

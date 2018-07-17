@@ -2,21 +2,6 @@
 # Date	:
 # Discp	: This program will run the BME280_Sensor in a while loop. Then it
 # 	: will send this data to a website to display the sensor readings 
-<<<<<<< HEAD
-# 	: along with the drone's data. 
-#
-
-import BME280_Sensor as bme280
-import time
-
-
-while(True): 
-	bme280.DisplayData()
-	time.sleep(5)
-	clear() 
-
-
-=======
 # 	: along with the drone's data. The program also does a write to
 #       : file function, the file directory is below. 
 # File  : home/pi/BMESensorProject 
@@ -51,11 +36,9 @@ user_input = raw_input("\nPress enter to begin and CTRL C to quit \n")
 # Output Sensor reading to screen in a loop until CTRL C is pressed
 try:
     while(True):
-        bme280.DisplayData()
-        # save data, possible solution 
-        with open("SensorData", "a+") as f:
-            json.dump(bme280.DisplayData(), f)
+        bme280.SensorData()
         print("\n")
+        
 # When CNTR C is pressed, finish by saving to a file 
 except false:
     print("\nInterrupted,  closing out")
@@ -63,5 +46,5 @@ except false:
 
 # Exit the program
 sys.exit()
->>>>>>> 2f3d0d2e35ee9d2a4759a78f292a91af79b190b3
+
 
