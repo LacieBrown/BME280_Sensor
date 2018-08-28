@@ -10,7 +10,8 @@
 #
 # Edit   : Lacie Brown
 # Descrip: Added lines of code to write temperature in F. Display temp
-#          in F. Added a delay in the display function. 
+#          in F. Added a delay in the display function. Addition of Sensor
+#          data dictory for further use in another code. (WhileLoop.py)
 # Date   : 13/07/2018
 #
 # http://www.raspberrypi-spy.co.uk/

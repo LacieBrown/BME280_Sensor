@@ -1,10 +1,11 @@
-# Author:
+# Author: Lacie Brown 
 # Date	:
 # Discp	: This program will run the BME280_Sensor in a while loop. Then it
 # 	: will send this data to a website to display the sensor readings 
 # 	: along with the drone's data. The program also does a write to
 #       : file function, the file directory is below. 
-# File  : home/pi/BMESensorProject 
+# File  : home/pi/BMESensorProject
+# File  : SensorData.txt (Text file with run data, saved to local drive) 
 
 
 import BME280_Sensor as bme280
@@ -14,6 +15,7 @@ import os
 import sys
 import datetime
 import csv
+import gps 
     
 false = KeyboardInterrupt
 
@@ -34,11 +36,12 @@ f.write(str(dattime)+"\n")
 print(dattime)
 
 #Get users input to begin displaying sensor readings
-user_input = raw_input("\nPress enter to begin and CTRL C to quit \n")
+user_input = input("\nPress enter to begin and CTRL C to quit \n")
 
-# Output Sensor reading to screen in a loop until CTRL C is pressed
+# Output Sensor and GPS readings to screen in a loop until CTRL C is pressed
 try:
     while(True):
+        # Take Sensor Readings and Display
         data = bme280.SensorDataDict()
         temperatureC = data["TempC"]
         temperatureF = data["TempF"]
@@ -50,19 +53,29 @@ try:
         print("Humidity = ", humidity, "%")
         print("\n")
         sleep(2)
-        
-        # Save Info to text file (Option 1)
+        # Take GPS Readings and Display
+        gps_data = gps.GPS_Data()
+        Latitude = gps_data["latitude"]
+        Longitude = gps_data["longitude"]
+        Latitude_dir = gps_data["latitude_direction"]
+        Longitude_dir = gps_data["longitude_direction"]
+        print("Latitude = ", Latitude, Latitude_dir)
+        print("Longitude = ", Longitude, Longitude_direction)
+        print("\n")
+        sleep(2)
+
+        # Save Info to text file
         f = open("SensorData.txt", "a+")
         f.write(str(data)+"\n")
         
-# When CNTR C is pressed, finish by saving to a file 
+# When CNTR C is pressed, finish by saving to file
 except false:
     print("\nInterrupted,  closing out")
     # Write the final reading displayed to the txt file
     f.write(str(data)+"\n")
     f.close() # final check to see if the txt file is closed 
 
-# Exit the program
+# Exit the program safely 
 sys.exit()
 
 
