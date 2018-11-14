@@ -1,37 +1,32 @@
 # Author: Lacie Brown 
 # Date	: 
-# Discp	: This program will read the GPS data that the drone is putting out. It is
-#       : kept in the NMEA format which is Latitude = DDMM.MMMMM and Longitude =
-#       : Longitude = DDDMM.MMMMM, decimals may vary. Simple conversions can be
-#       : done within another function if a different format is desired. 
+# Discp	: This program will read the GPS data that the drone is putting out through
+#       : MAVLink. Dronekit is used to connect to the port the drone is on. It is
+#       : also used to read the GPS parameters. 
+#       : 
 # File  : home/pi/BME280_Sensor/gps.py
 
-import time
-import serial
+import dronekit
 
-def init_serial():
-    port = "/dev/ttyAMA0"
-    global ser
-    ser = serial.Serial()
-    ser.baudrate = 9600
-    ser.port = port
-    ser.timeout = 0.5
-    ser.open()
+port = '/dev/ttyAMA0'
 
-def GPS_Data():
-    init_serial()
-    data = (str)(ser.readline())
-    if data[0:6] == "$GPGGA":
-        d = data.split(",")
-        if d[7] == "0":
-            print("There is no GPS data")
-        else:
-            latitude = d[2]
-            latitude_diriection = d[3]
-            longitude = d[4]
-            longitude_direction = d[5]
-            dict = {"latitude" : latitude, "latitude_direction = " : latitude_direction,
-                    "longitude": longitude, "longitude_direction": longitude_direction}
-            return dict
-        
-        
+def connect_vehicle():
+# Connect to the port using dronekit.connect, baud is set to 57600    
+    v = dronekit.connect(port, wait_ready=None, baud=57600)
+    return vehicle
+
+def read_vehicle_gps_parameters():
+# This function will read the lattitude, longitude, and altitude of the drone. These parameters are
+# then put into a dictionary for use in the WhileLoop
+    vehicle = connect_vehicle()
+    lat = vehicle.location.global_frame.lat
+    lon = vehicle.location.global_frame.lon
+    alt = vehicle.location.global_frame.alt
+    dict = {"latitude" : lat, "longitude" : lon, "altitude" : alt}
+    return dict
+
+def read_vehicle_gps():
+# This function will read the gps, and output the full gps parameter (I do not know in what format) 
+    vehicle = connect_vehicle()
+    GPS = vehicle.gps_0
+    return GPS
